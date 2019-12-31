@@ -1,0 +1,21 @@
+import { LoggerOptions, transports, createLogger } from "winston";
+
+const options: LoggerOptions = {
+    transports: [
+        new transports.Console({
+            level: process.env.NODE_ENV === "production" ? "error" : "debug",
+        }),
+        new transports.File({
+            filename: "debug.log",
+            level: "debug",
+        }),
+    ],
+};
+
+const logger = createLogger(options);
+
+if (process.env.NODE_ENV !== "production") {
+    logger.debug("Logging enabled");
+}
+
+export default logger;
